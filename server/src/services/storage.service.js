@@ -1,5 +1,5 @@
 import ImageKit, { toFile } from '@imagekit/nodejs';
-import config from "../src/config/config.js"
+import config from "../config/config.js"
 
 let client
 
