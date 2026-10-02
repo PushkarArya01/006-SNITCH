@@ -115,3 +115,16 @@ export async function listProduct(req, res) {
     })
 
 }
+
+export async function getProductById(req, res) {
+    const product = await productModel.findOne({ _id: req.params.id, published: true })
+
+    if (!product) {
+        return res.status(404).json({ message: "Product not found" })
+    }
+
+    return res.status(200).json({
+        message: "Product data fetched successfully",
+        data: { product }
+    })
+}

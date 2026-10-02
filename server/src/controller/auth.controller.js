@@ -17,7 +17,7 @@ import {
  */
 export async function register(req, res) {
 
-    const { email, name, password } = req.body
+    const { email, name, password, phone } = req.body
 
     const isUserAlreadyExists = await userModel.findOne({
         email
@@ -38,6 +38,7 @@ export async function register(req, res) {
     const user = await userModel.create({
         email,
         name,
+        phone,
         passwordHash: await bcrypt.hash(password, 12)
     })
 
@@ -65,6 +66,7 @@ export async function register(req, res) {
             user: {
                 email: user.email,
                 name: user.name,
+                phone: user.phone,
                 id: user._id
             },
             accessToken
@@ -218,6 +220,7 @@ export async function getMe(req, res) {
             user: {
                 email: user.email,
                 name: user.name,
+                phone: user.phone,
                 id: user._id
             }
         }

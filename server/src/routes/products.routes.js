@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { createProductValidator, unlistProductValidator, listProductValidator } from "../validators/product.validator.js"
 import { authenticate, authenticateSeller } from "../middlewares/auth.middleware.js"
-import { createProduct, listAllProducts, unlistProduct, listProduct, listAllProductsToSeller } from "../controller/product.controller.js"
+import { createProduct, listAllProducts, getProductById, unlistProduct, listProduct, listAllProductsToSeller } from "../controller/product.controller.js"
 
 
 import multer from "multer"
@@ -10,7 +10,7 @@ const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
         files: 5,
-        fileSize: 1 * 1024 * 1024 // 1MB
+        fileSize: 5 * 1024 * 1024 // 1MB
     },
 })
 
@@ -48,7 +48,7 @@ router.post("/",
  * @description Read all the published products from the DB
  * @access user
  */
-router.get("/", authenticate, listAllProducts)
+router.get("/", listAllProducts)
 
 
 
@@ -77,7 +77,9 @@ router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProductValid
  * @description list a product by its ID
  * @access seller
  */
-router.patch("/unlist/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
+router.patch("/list/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
+
+router.get("/:id", getProductById)
 
 
 export default router
